@@ -1,8 +1,9 @@
 package com.github.PiotrDuma.service;
 
 import com.github.PiotrDuma.model.UserDto;
+import com.github.PiotrDuma.utils.ResponseDetails;
+import com.github.PiotrDuma.utils.ResponseDetailsWrapper;
 import io.restassured.RestAssured;
-import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
 public class JsonService {
@@ -18,24 +19,24 @@ public class JsonService {
         .header("accept", HEADER_CONTENT);
   }
 
-  public Response getRequest(){
-    return request.get(URL);
+  public ResponseDetails getRequest(){
+    return new ResponseDetailsWrapper(request.get(URL));
   }
 
-  public Response getRequest(int id){
-    return request.get(getUrl(id));
+  public ResponseDetails getRequest(int id){
+    return new ResponseDetailsWrapper(request.get(getUrl(id)));
   }
 
-  public Response postRequest(UserDto dto){
-    return request.body(dto).post(URL);
+  public ResponseDetails postRequest(UserDto dto){
+    return new ResponseDetailsWrapper(request.body(dto).post(URL));
   }
 
-  public Response putRequest(int id, UserDto dto){
-    return request.body(dto).put(getUrl(id));
+  public ResponseDetails putRequest(int id, UserDto dto){
+    return new ResponseDetailsWrapper(request.body(dto).put(getUrl(id)));
   }
 
-  public Response deleteRequest(int id){
-    return request.delete(getUrl(id));
+  public ResponseDetails deleteRequest(int id){
+    return new ResponseDetailsWrapper(request.delete(getUrl(id)));
   }
 
   private static String getUrl(int id){

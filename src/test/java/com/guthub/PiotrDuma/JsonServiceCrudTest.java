@@ -5,7 +5,7 @@ import com.github.PiotrDuma.model.UserDto.AddressDTO;
 import com.github.PiotrDuma.model.UserDto.CompanyDTO;
 import com.github.PiotrDuma.model.UserDto.GeoDTO;
 import com.github.PiotrDuma.service.JsonService;
-import io.restassured.response.Response;
+import com.github.PiotrDuma.utils.ResponseDetails;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,11 +27,11 @@ public class JsonServiceCrudTest {
   void getMethodShouldReturnByIdTest() {
     int id = 1;
 
-    Response response = service.getRequest(id);
+    ResponseDetails response = service.getRequest(id);
 
     Assertions.assertThat(response.getStatusCode())
         .isEqualTo(HttpStatus.SC_OK);
-    Assertions.assertThat(response.getBody().as(UserDto.class))
+    Assertions.assertThat(response.getResponseObject(UserDto.class))
         .as("Check if received object has valid id")
         .isNotNull()
         .hasFieldOrPropertyWithValue("id", id);
@@ -42,7 +42,7 @@ public class JsonServiceCrudTest {
   void getMethodShouldReturnNotFoundTest() {
     int id = 12;
 
-    Response response = service.getRequest(id);
+    ResponseDetails response = service.getRequest(id);
 
     Assertions.assertThat(response.getStatusCode())
         .as("Check if response status code is 404")
@@ -54,12 +54,11 @@ public class JsonServiceCrudTest {
   void postMethodShouldReturnByIdTest() {
     UserDto dto = getDto();
 
-    Response response = service.postRequest(dto);
-    UserDto result = response.getBody().as(UserDto.class);
+    ResponseDetails response = service.postRequest(dto);
 
     Assertions.assertThat(response.getStatusCode())
         .isEqualTo(HttpStatus.SC_CREATED);
-    Assertions.assertThat(result)
+    Assertions.assertThat(response.getResponseObject(UserDto.class))
         .as("Check if created object is valid")
         .isNotNull()
         .usingRecursiveComparison()
@@ -74,12 +73,11 @@ public class JsonServiceCrudTest {
     UserDto dto = getDto();
     dto.setId(2);
 
-    Response response = service.putRequest(id, dto);
-    UserDto result = response.getBody().as(UserDto.class);
+    ResponseDetails response = service.putRequest(id, dto);
 
     Assertions.assertThat(response.getStatusCode())
         .isEqualTo(HttpStatus.SC_OK);
-    Assertions.assertThat(result)
+    Assertions.assertThat(response.getResponseObject(UserDto.class))
         .as("Check if updated object is valid")
         .isNotNull()
         .usingRecursiveComparison()
@@ -92,7 +90,7 @@ public class JsonServiceCrudTest {
   void putMethodShouldReturnNotFoundTest() {
     int id = 12;
 
-    Response response = service.putRequest(id, getDto());
+    ResponseDetails response = service.putRequest(id, getDto());
 
     Assertions.assertThat(response.getStatusCode())
         .as("Check if response status code is 404")
@@ -104,7 +102,7 @@ public class JsonServiceCrudTest {
   void deleteMethodTest() {
     int id = 2;
 
-    Response response = service.deleteRequest(id);
+    ResponseDetails response = service.deleteRequest(id);
 
     Assertions.assertThat(response.getStatusCode())
         .isEqualTo(HttpStatus.SC_OK);
@@ -116,7 +114,7 @@ public class JsonServiceCrudTest {
   void deleteMethodShouldReturn404Test() {
     int id = 200;
 
-    Response response = service.deleteRequest(id);
+    ResponseDetails response = service.deleteRequest(id);
 
     Assertions.assertThat(response.getStatusCode())
         .isEqualTo(HttpStatus.SC_NOT_FOUND);
