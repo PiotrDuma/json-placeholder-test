@@ -12,7 +12,8 @@ mvn clean test
 
 ## Features
 
-- unit tests with RestAssured;
-- parallel testing with jUnit5;
+- Unit tests with RestAssured;
+- Parallel testing with jUnit5;
 - JsonService class to manage web requests;
 - UserDto class to handle server json response;
+- Decorator pattern using wrapper of the server response object (decorator-wrapper branch);
