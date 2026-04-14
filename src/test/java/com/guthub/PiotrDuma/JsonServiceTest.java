@@ -1,6 +1,6 @@
 package com.guthub.PiotrDuma;
 
-import com.github.PiotrDuma.model.UserDto;
+import com.github.PiotrDuma.model.User;
 import com.github.PiotrDuma.service.JsonService;
 import com.github.PiotrDuma.utils.ResponseDetails;
 import org.apache.http.HttpStatus;
@@ -46,7 +46,7 @@ public class JsonServiceTest {
     int expected = 10;
     ResponseDetails response = service.getRequest();
 
-    Assertions.assertThat(response.getResponseList(UserDto.class))
+    Assertions.assertThat(response.getResponseList(User.class))
         .as("Check if GET method contains valid number of items")
         .doesNotContainNull()
         .hasSize(expected);

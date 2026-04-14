@@ -1,9 +1,12 @@
 package com.github.PiotrDuma.service;
 
-import com.github.PiotrDuma.model.UserDto;
+import com.github.PiotrDuma.model.User;
 import com.github.PiotrDuma.utils.ResponseDetails;
 import com.github.PiotrDuma.utils.ResponseDetailsWrapper;
 import io.restassured.RestAssured;
+import io.restassured.filter.log.LogDetail;
+import io.restassured.filter.log.RequestLoggingFilter;
+import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.specification.RequestSpecification;
 
 public class JsonService {
@@ -27,11 +30,11 @@ public class JsonService {
     return new ResponseDetailsWrapper(request.get(getUrl(id)));
   }
 
-  public ResponseDetails postRequest(UserDto dto){
+  public ResponseDetails postRequest(User dto){
     return new ResponseDetailsWrapper(request.body(dto).post(URL));
   }
 
-  public ResponseDetails putRequest(int id, UserDto dto){
+  public ResponseDetails putRequest(int id, User dto){
     return new ResponseDetailsWrapper(request.body(dto).put(getUrl(id)));
   }
 
