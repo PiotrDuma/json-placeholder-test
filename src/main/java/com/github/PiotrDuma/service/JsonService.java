@@ -18,6 +18,8 @@ public class JsonService {
 
   public JsonService() {
     this.request = RestAssured.given()
+        .filter(new RequestLoggingFilter(LogDetail.ALL, true, System.out))
+        .filter(new ResponseLoggingFilter(LogDetail.ALL, true, System.out))
         .header("Content-Type", HEADER_CONTENT)
         .header("accept", HEADER_CONTENT);
   }
