@@ -23,3 +23,7 @@ mvn clean test
 - Split models into separate classes;
 - Apply JsonProperty annotation to map API variables;
 - Add filters to log request/response;
+
+## Final review changes applied:
+- move all interactions with RestAssured Response class to base service (CrudService class);
+- change naming to keep consistency;
